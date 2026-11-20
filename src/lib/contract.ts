@@ -12,7 +12,7 @@ export const megaethTestnet = defineChain({
   },
 });
 
-export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
+export const CONTRACT_ADDRESS = (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS?.trim() || "0x344B09F5DDc3Fb90E62a7391C0F621FA3B909F92") as `0x${string}`;
 
 export const MEGA_WORDLE_ABI = [
   {
