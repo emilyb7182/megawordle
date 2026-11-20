@@ -1,6 +1,6 @@
 import fs from "fs";
 import wordListPath from "word-list";
-import { wordList as commonWords } from "random-words";
+import { wordsList as commonWords } from "random-words";
 import { NextResponse } from "next/server";
 import { createPublicClient, encodePacked, http, keccak256 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
@@ -16,8 +16,8 @@ const TARGET_WORDS = Array.from(
   new Set([
     ...WEB3_WORDS,
     ...commonWords
-      .map((w) => w.trim().toUpperCase())
-      .filter((w) => /^[A-Z]{5}$/.test(w)),
+      .map((w: string) => w.trim().toUpperCase())
+      .filter((w: string) => /^[A-Z]{5}$/.test(w)),
   ])
 );
 
@@ -116,7 +116,7 @@ export async function POST(req: Request) {
           ],
         },
         args: { gameId: BigInt(numericId) },
-        fromBlock: 0n,
+        fromBlock: BigInt(0),
       });
 
       if (logs.length === 0 || logs[0].args.player?.toLowerCase() !== cleanPlayer) {
