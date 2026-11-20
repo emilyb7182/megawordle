@@ -21,11 +21,12 @@ interface RowData {
 const TURN_SECONDS = 20;
 
 const TIERS = [
-  { guesses: "1 Guess", name: "Mythic", mult: "5.0x (0.025 ETH)", color: "text-amber-400" },
-  { guesses: "2 Guesses", name: "Epic", mult: "2.5x (0.0125 ETH)", color: "text-purple-400" },
-  { guesses: "3–4 Guesses", name: "Rare", mult: "1.5x (0.0075 ETH)", color: "text-sky-400" },
-  { guesses: "5–6 Guesses", name: "Uncommon", mult: "0.5x (0.0025 ETH)", color: "text-emerald-400" },
-  { guesses: "Loss / Timeout", name: "Common", mult: "0x (0 ETH)", color: "text-zinc-500" },
+  { guesses: "1 Guess", name: "Mythic", mult: "10.0x (0.050 ETH)", color: "text-amber-400" },
+  { guesses: "2 Guesses", name: "Epic", mult: "3.0x (0.015 ETH)", color: "text-purple-400" },
+  { guesses: "3 Guesses", name: "Rare", mult: "1.2x (0.006 ETH)", color: "text-sky-400" },
+  { guesses: "4 Guesses", name: "Uncommon", mult: "0.75x (0.00375 ETH)", color: "text-emerald-400" },
+  { guesses: "5–6 Guesses", name: "Common", mult: "0.4x (0.002 ETH)", color: "text-zinc-300" },
+  { guesses: "Loss / Timeout", name: "Bust", mult: "0x (0 ETH)", color: "text-zinc-500" },
 ];
 
 export default function Home() {
