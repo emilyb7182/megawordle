@@ -1,6 +1,7 @@
 import fs from "fs";
 import wordListPath from "word-list";
-import { wordsList as commonWords } from "random-words";
+import { generate } from "random-words";
+const commonWords = generate(4000) as string[];
 import { NextResponse } from "next/server";
 import { createPublicClient, encodePacked, http, keccak256 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
