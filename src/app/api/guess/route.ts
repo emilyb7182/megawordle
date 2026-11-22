@@ -1,6 +1,5 @@
 import fs from "fs";
 import wordListPath from "word-list";
-import { wordList as commonWords } from "random-words";
 import { NextResponse } from "next/server";
 import { createPublicClient, encodePacked, http, keccak256 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
@@ -12,22 +11,20 @@ const WEB3_WORDS = [
   "NODES", "LAYER", "SPEED", "FLASH", "SMART",
 ];
 
+const ALL_FIVE_LETTER_WORDS = fs
+  .readFileSync(wordListPath, "utf8")
+  .split("\n")
+  .map((w) => w.trim().toUpperCase())
+  .filter((w) => /^[A-Z]{5}$/.test(w));
+
 const TARGET_WORDS = Array.from(
   new Set([
     ...WEB3_WORDS,
-    ...commonWords
-      .map((w: string) => w.trim().toUpperCase())
-      .filter((w: string) => /^[A-Z]{5}$/.test(w)),
+    ...ALL_FIVE_LETTER_WORDS.filter((_, idx) => idx % 4 === 0),
   ])
 );
 
-const VALID_WORDS = new Set<string>(
-  fs
-    .readFileSync(wordListPath, "utf8")
-    .split("\n")
-    .map((w) => w.trim().toUpperCase())
-    .filter((w) => w.length === 5)
-);
+const VALID_WORDS = new Set<string>(ALL_FIVE_LETTER_WORDS);
 
 for (const word of TARGET_WORDS) {
   VALID_WORDS.add(word);
