@@ -133,7 +133,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Player mismatch" }, { status: 403 });
     }
 
-    if (session.finished || session.guesses.length >= 6) {
+    if (session.finished || session.guesses.length >= 8) {
       return NextResponse.json({ error: "Game is already over" }, { status: 400 });
     }
 
@@ -175,7 +175,7 @@ export async function POST(req: Request) {
     const secret = getSecretWord(numericId);
     const evaluation = evaluateGuess(cleanGuess, secret);
     const won = cleanGuess === secret;
-    const gameOver = won || attemptNumber >= 6;
+    const gameOver = won || attemptNumber >= 8;
 
     let signature: `0x${string}` | null = null;
     let secretReveal: string | null = null;

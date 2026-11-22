@@ -20,20 +20,13 @@ interface RowData {
 
 const TURN_SECONDS = 20;
 
-const TIERS = [
-  { guesses: "1 Guess", name: "Mythic", mult: "10.0x (0.050 ETH)", color: "text-amber-400" },
-  { guesses: "2 Guesses", name: "Epic", mult: "3.0x (0.015 ETH)", color: "text-purple-400" },
-  { guesses: "3 Guesses", name: "Rare", mult: "1.2x (0.006 ETH)", color: "text-sky-400" },
-  { guesses: "4 Guesses", name: "Uncommon", mult: "0.75x (0.00375 ETH)", color: "text-emerald-400" },
-  { guesses: "5–6 Guesses", name: "Common", mult: "0.4x (0.002 ETH)", color: "text-zinc-300" },
-  { guesses: "Loss / Timeout", name: "Bust", mult: "0x (0 ETH)", color: "text-zinc-500" },
-];
+const TIERS=[{guesses:"1 Guess",name:"Mythic",mult:"10.0x (0.050 ETH)",color:"text-amber-400"},{guesses:"2 Guesses",name:"Epic",mult:"3.0x (0.015 ETH)",color:"text-purple-400"},{guesses:"3 Guesses",name:"Rare",mult:"1.5x (0.0075 ETH)",color:"text-sky-400"},{guesses:"4 Guesses",name:"Uncommon",mult:"1.2x (0.006 ETH)",color:"text-emerald-400"},{guesses:"5–6 Guesses",name:"Common",mult:"0.6x (0.003 ETH)",color:"text-zinc-300"},{guesses:"7–8 Guesses",name:"Scrape",mult:"0.3x (0.0015 ETH)",color:"text-orange-300"},{guesses:"Loss / Timeout",name:"Bust",mult:"0x (0 ETH)",color:"text-zinc-500"}];
 
 export default function Home() {
   const [address, setAddress] = useState<`0x${string}` | null>(null);
   const [gameId, setGameId] = useState<number | null>(null);
   const [rows, setRows] = useState<RowData[]>(
-    Array.from({ length: 6 }, () => ({ letters: Array(5).fill(""), states: Array(5).fill("empty") }))
+    Array.from({ length: 8 }, () => ({ letters: Array(5).fill(""), states: Array(5).fill("empty") }))
   );
   const [currentRow, setCurrentRow] = useState(0);
   const [currentGuess, setCurrentGuess] = useState("");
@@ -121,8 +114,8 @@ export default function Home() {
         body: JSON.stringify({ gameId: startedId, player: address, action: "init" }),
       });
 
-      setGameId(startedId);
-      setRows(Array.from({ length: 6 }, () => ({ letters: Array(5).fill(""), states: Array(5).fill("empty") })));
+      if(document.activeElement instanceof HTMLElement)document.activeElement.blur();window.focus();setGameId(startedId);
+      setRows(Array.from({ length: 8 }, () => ({ letters: Array(5).fill(""), states: Array(5).fill("empty") })));
       setCurrentRow(0);
       setCurrentGuess("");
       setGameOver(false);
@@ -223,7 +216,7 @@ export default function Home() {
         setCurrentRow(attemptNumber);
         setTimeLeft(TURN_SECONDS);
         timeoutTriggeredRef.current = false;
-        setStatusMsg(`Guess ${attemptNumber}/6 recorded. Clock reset to 20s!`);
+        setStatusMsg(`Guess ${attemptNumber}/8 recorded. Clock reset to 20s!`);
       }
     } catch (err: unknown) {
       setStatusMsg(err instanceof Error ? err.message : "Error checking guess");
@@ -331,7 +324,7 @@ export default function Home() {
       )}
 
       {/* Wordle Grid */}
-      <div className="grid grid-rows-6 gap-2 mb-6">
+      <div className="grid grid-rows-8 gap-2 mb-6">
         {rows.map((row, rIdx) => {
           const isCurrent = rIdx === currentRow && !gameOver && gameId !== null;
           return (
