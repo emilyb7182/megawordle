@@ -12,7 +12,8 @@ export const megaethTestnet = defineChain({
   },
 });
 
-export const CONTRACT_ADDRESS = (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS?.trim() || "0x31522de8500bE071E5917Be413bf2e9142F0CBa7") as `0x${string}`;
+const rawAddr = (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "").replace(/["'\s]/g, "");
+export const CONTRACT_ADDRESS = (/^0x[a-fA-F0-9]{40}$/.test(rawAddr) ? rawAddr : "0x31522de8500bE071E5917Be413bf2e9142F0CBa7") as `0x${string}`;
 
 export const MEGA_WORDLE_ABI = [
   {
