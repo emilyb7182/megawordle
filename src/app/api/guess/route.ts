@@ -1,3 +1,4 @@
+import path from "path";
 import fs from "fs";
 import wordListPath from "word-list";
 import { NextResponse } from "next/server";
@@ -17,12 +18,7 @@ const ALL_FIVE_LETTER_WORDS = fs
   .map((w) => w.trim().toUpperCase())
   .filter((w) => /^[A-Z]{5}$/.test(w));
 
-const TARGET_WORDS = Array.from(
-  new Set([
-    ...WEB3_WORDS,
-    ...ALL_FIVE_LETTER_WORDS.filter((_, idx) => idx % 4 === 0),
-  ])
-);
+const WORDLE_WORDS=fs.readFileSync(path.join(process.cwd(),"src/lib/wordle-answers.txt"),"utf8").split(/\r?\n/).map(w=>w.trim().toUpperCase()).filter(w=>/^[A-Z]{5}$/.test(w));const TARGET_WORDS=Array.from(new Set([...WEB3_WORDS,...WORDLE_WORDS]));
 
 const VALID_WORDS = new Set<string>(ALL_FIVE_LETTER_WORDS);
 
